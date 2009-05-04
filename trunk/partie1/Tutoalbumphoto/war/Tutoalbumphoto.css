@@ -1,0 +1,6 @@
+/** Ajoutez les styles CSS pour votre application. */
+
+/** La plupart des composants GWT ont des classes CSS prédéfinie */
+.gwt-DialogBox {
+  width: 400px;
+}
