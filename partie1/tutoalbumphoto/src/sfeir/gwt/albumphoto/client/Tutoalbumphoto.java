@@ -30,33 +30,62 @@ public class Tutoalbumphoto implements EntryPoint, ClickHandler, CloseHandler<Po
      * On peut le comparer au Main d'une application java ou d'un programme C
      */
     public void onModuleLoad() {
-        VerticalPanel verticalPanel = new VerticalPanel();
-        liste = new FlowPanel();
-        
+        /* Liste de toutes les miniatures
+         * Le FlowPanel affiche ses composants à la suite les uns des autres
+         * Il n'ajoute aucun code html entre les deux.
+         * Nous avons mis notre composant Miniature en flot: left;
+         * Ce qui nous permet de les afficher en plusieurs lignes.
+         */
+        liste = new FlowPanel();        
         liste.add(new Miniature("http://www.programmez.com/img/magazines/couverture_119.jpg", "Mai 2009"));
         liste.add(new Miniature("http://www.programmez.com/img/magazines/couverture_118.jpg", "Avril 2009"));
+        // Création du bouton pour ajouter une image
         boutonAjouter = new Button("Ajouter");
+        // On ajoute un évènement sur le clique du bouton
         boutonAjouter.addClickHandler(this);
+        // Layout qui contient notre liste et le bouton à ajouter
+        VerticalPanel verticalPanel = new VerticalPanel();
         verticalPanel.add(liste);
         verticalPanel.add(boutonAjouter);
+        // On ajoute dans notre page notre layout
         RootPanel.get().add(verticalPanel);
     }
       
+    /** 
+     * Cette fonction est appelé lors du clique sur le bouton ajouter
+     * On vérifie si la source de l'évènement est bien le bouton
+     * Et on affiche la fenêtre d'édition
+     * 
+     * @see com.google.gwt.event.dom.client.ClickHandler#onClick(com.google.gwt.event.dom.client.ClickEvent)
+     */
     @Override
     public void onClick(ClickEvent event) {
         if (event.getSource() == boutonAjouter) {
+            // On crée la fenêtre
             Formulaire fenetreAjout = new Formulaire();
+            // On l'affiche
             fenetreAjout.show();
+            // On ajoute un évènement sur la fermeture de la fenêtre
             fenetreAjout.addCloseHandler(this);
         }      
     }
 
+    /** 
+     * Cette fonction est appelé quand la fenêtre d'ajout est fermé ou caché
+     * On récuppére l'accès à la fenêtre pour accèder aux deux champs texte
+     * et on ajoute l'image dans la liste
+     * 
+     * @see com.google.gwt.event.logical.shared.CloseHandler#onClose(com.google.gwt.event.logical.shared.CloseEvent)
+     */
     @Override
     public void onClose(CloseEvent<PopupPanel> event) {
+        // On récupére la fenêtre qui viens d'être fermé
         Formulaire fenetreAjout = (Formulaire) event.getTarget();
         if (fenetreAjout != null) {
+            // On réccupére l'url et le titre dans les champs de la fenêtre
             String url = fenetreAjout.saisieUrl.getText();
             String titre = fenetreAjout.saisieTitre.getText();
+            // Si l'url a été remplis, on ajoute l'image
             if (!url.isEmpty())
                 liste.add(new Miniature(url, titre));
         }
