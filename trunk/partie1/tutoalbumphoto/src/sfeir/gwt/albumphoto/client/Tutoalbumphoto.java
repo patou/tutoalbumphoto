@@ -84,7 +84,7 @@ public class Tutoalbumphoto implements EntryPoint, ClickHandler, CloseHandler<Po
             String url = fenetreAjout.saisieUrl.getText();
             String titre = fenetreAjout.saisieTitre.getText();
             // Si l'url a été remplis, on ajoute l'image
-            if (!url.isEmpty())
+            if (url.length() != 0)
                 liste.add(new Miniature(url, titre));
         }
     }
