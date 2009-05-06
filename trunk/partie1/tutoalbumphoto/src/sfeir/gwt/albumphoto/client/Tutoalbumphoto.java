@@ -58,7 +58,6 @@ public class Tutoalbumphoto implements EntryPoint, ClickHandler, CloseHandler<Po
      * 
      * @see com.google.gwt.event.dom.client.ClickHandler#onClick(com.google.gwt.event.dom.client.ClickEvent)
      */
-    @Override
     public void onClick(ClickEvent event) {
         if (event.getSource() == boutonAjouter) {
             // On crée la fenêtre
@@ -77,7 +76,6 @@ public class Tutoalbumphoto implements EntryPoint, ClickHandler, CloseHandler<Po
      * 
      * @see com.google.gwt.event.logical.shared.CloseHandler#onClose(com.google.gwt.event.logical.shared.CloseEvent)
      */
-    @Override
     public void onClose(CloseEvent<PopupPanel> event) {
         // On récupére la fenêtre qui viens d'être fermé
         Formulaire fenetreAjout = (Formulaire) event.getTarget();

@@ -38,7 +38,6 @@ public class Formulaire extends DialogBox {
          Pour cacher la fenêtre 
          On crée directement le Handler grace à une fonction anonyme */ 
         boutonAjouter.addClickHandler(new ClickHandler(){
-            @Override
             public void onClick(ClickEvent event) {
                Formulaire.this.hide();       
             }});
