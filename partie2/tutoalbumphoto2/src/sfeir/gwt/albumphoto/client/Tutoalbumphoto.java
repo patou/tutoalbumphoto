@@ -14,6 +14,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.CloseEvent;
 import com.google.gwt.event.logical.shared.CloseHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
@@ -46,8 +47,8 @@ public class Tutoalbumphoto implements EntryPoint, ClickHandler {
     private Button boutonSuiv;
 
     /**
-     * C'est la première methode qui sera appelée au l'instanciation de la
-     * classe, toute classe implémentant EntryPoint doit définir cette méthode.
+     * C'est la première methode qui sera appelée à l'instanciation de la
+     * classe, toutes classes implémentant EntryPoint doit définir cette méthode.
      * C'est ici qu'on initialise généralement les variables et qu'on construit
      * l'interface graphique. On peut le comparer au Main d'une application java
      * ou d'un programme C
@@ -208,26 +209,21 @@ public class Tutoalbumphoto implements EntryPoint, ClickHandler {
         sujetEnCours = sujet;
 
         picasaService.getPhotos(sujet, page,
-                new AsyncCallback<List<Photographie>>() {
-
-                    @Override
-                    public void onFailure(Throwable caught) {
-                        liste.clear();
-                        liste
-                                .add(new Miniature(
-                                        "http://www.programmez.com/img/magazines/couverture_118.jpg",
-                                        "Failure", ""));
+            new AsyncCallback<List<Photographie>>() {
+    
+                @Override
+                public void onFailure(Throwable caught) {
+                    Window.alert("Erreur lors de l'appel de la fonction distante getPhotos : " + caught.getMessage());
+                }
+    
+                @Override
+                public void onSuccess(List<Photographie> result) {
+                    liste.clear();
+                    for (Photographie p : result) {
+                        liste.add(new Miniature(p.getPhotoMiniatureUrl(), p
+                                .getPhotoTitre(), p.getPicasaUrl()));
                     }
-
-                    @Override
-                    public void onSuccess(List<Photographie> result) {
-
-                        liste.clear();
-                        for (Photographie p : result) {
-                            liste.add(new Miniature(p.getPhotoMiniatureUrl(), p
-                                    .getPhotoTitre(), p.getPicasaUrl()));
-                        }
-                    }
-                });
+                }
+            });
     }
 }
