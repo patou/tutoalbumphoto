@@ -9,5 +9,5 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 @RemoteServiceRelativePath("picasaService")
 public interface PicasaService extends RemoteService {
-    public List<Photographie> getPhotos(String sujet, Integer page);
+    public List<Photographie> getPhotos(String sujet, Integer page) throws Exception;
 }
