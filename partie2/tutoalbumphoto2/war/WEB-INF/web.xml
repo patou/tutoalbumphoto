@@ -9,5 +9,15 @@
   <welcome-file-list>
     <welcome-file>Tutoalbumphoto.html</welcome-file>
   </welcome-file-list>
+  
+    <servlet>
+        <servlet-name>picasaServlet</servlet-name>
+        <servlet-class>sfeir.gwt.albumphoto.server.rpc.impl.PicasaServiceImpl</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>picasaServlet</servlet-name>
+        <url-pattern>/tutoalbumphoto/picasaService</url-pattern>
+    </servlet-mapping>
 
 </web-app>
