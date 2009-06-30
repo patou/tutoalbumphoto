@@ -2,6 +2,7 @@ package sfeir.gwt.albumphoto.client;
 
 import java.util.List;
 
+import sfeir.gwt.albumphoto.client.images.MesImages;
 import sfeir.gwt.albumphoto.client.lang.MesMessages;
 import sfeir.gwt.albumphoto.client.model.Photographie;
 import sfeir.gwt.albumphoto.client.rpc.PicasaService;
@@ -30,6 +31,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 public class Tutoalbumphoto implements EntryPoint, ClickHandler {
 
     private MesMessages mesMessages = GWT.create(MesMessages.class);
+    private MesImages mesImages = GWT.create(MesImages.class);
 
     private final PicasaServiceAsync picasaService = GWT
             .create(PicasaService.class);
@@ -76,6 +78,8 @@ public class Tutoalbumphoto implements EntryPoint, ClickHandler {
         // On ajoute un évènement sur le clic du bouton
         boutonRechercher.addClickHandler(this);
 
+        
+        
         boutonPrec = new Button(mesMessages.precedent());
         boutonPrec.setEnabled(false);
         boutonPrec.addClickHandler(new ClickHandler() {
@@ -102,9 +106,14 @@ public class Tutoalbumphoto implements EntryPoint, ClickHandler {
         VerticalPanel verticalPanel = new VerticalPanel();
         HorizontalPanel horizontalPanel = new HorizontalPanel();
 
+        horizontalPanel.add(mesImages.logo().createImage());
+        horizontalPanel.add(mesImages.spacer().createImage());
         horizontalPanel.add(boutonAjouter);
+        horizontalPanel.add(mesImages.spacer().createImage());
         horizontalPanel.add(boutonRechercher);
+        horizontalPanel.add(mesImages.spacer().createImage());
         horizontalPanel.add(boutonPrec);
+        horizontalPanel.add(mesImages.spacer().createImage());
         horizontalPanel.add(boutonSuiv);
 
         verticalPanel.add(horizontalPanel);
