@@ -7,6 +7,8 @@
 
 
 .miniature-float {
-    float: left;
+    float : left;
     margin: 20px;
+    height: 150px;
+    width: 150px;
 }

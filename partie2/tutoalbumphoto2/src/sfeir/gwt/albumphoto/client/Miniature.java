@@ -50,8 +50,8 @@ public class Miniature extends Composite {
         // Initialise l'affichage
         initWidget(panel);
         // Modifie la taille du composant
-        setHeight("80px");
-        setWidth("80px");
+        setHeight("150px");
+        setWidth("150px");
         /*
          * Ajoute une classe CSS au code (<div class="miniature-float"></div>)
          * Cela permet de styliser notre composant Ajouter dans votre fichier
