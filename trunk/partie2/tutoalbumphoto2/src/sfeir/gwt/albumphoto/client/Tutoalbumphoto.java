@@ -79,8 +79,6 @@ public class Tutoalbumphoto implements EntryPoint, ClickHandler {
         // On ajoute un évènement sur le clic du bouton
         boutonRechercher.addClickHandler(this);
 
-        
-        
         boutonPrec = new Button(mesMessages.precedent());
         boutonPrec.setEnabled(false);
         boutonPrec.addClickHandler(new ClickHandler() {
@@ -222,6 +220,7 @@ public class Tutoalbumphoto implements EntryPoint, ClickHandler {
                     for (Photographie p : result) {
                         liste.add(new Miniature(p.getPhotoMiniatureUrl(), p
                                 .getPhotoTitre(), p.getPicasaUrl()));
+
                     }
                 }
             });
