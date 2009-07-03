@@ -16,6 +16,7 @@ import com.google.gwt.event.logical.shared.CloseEvent;
 import com.google.gwt.event.logical.shared.CloseHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -62,12 +63,6 @@ public class Tutoalbumphoto implements EntryPoint, ClickHandler {
          */
 
         liste = new FlowPanel();
-        liste.add(new Miniature(
-                "http://www.programmez.com/img/magazines/couverture_119.jpg",
-                "Mai 2009", ""));
-        liste.add(new Miniature(
-                "http://www.programmez.com/img/magazines/couverture_118.jpg",
-                "Avril 2009", ""));
 
         // Création du bouton pour ajouter une image
         boutonAjouter = new Button(mesMessages.ajouter());
@@ -79,7 +74,7 @@ public class Tutoalbumphoto implements EntryPoint, ClickHandler {
         // On ajoute un évènement sur le clic du bouton
         boutonRechercher.addClickHandler(this);
 
-        boutonPrec = new Button(mesMessages.precedent());
+        boutonPrec = new Button(mesImages.precedent().getHTML() + mesMessages.precedent());
         boutonPrec.setEnabled(false);
         boutonPrec.addClickHandler(new ClickHandler() {
 
@@ -90,7 +85,7 @@ public class Tutoalbumphoto implements EntryPoint, ClickHandler {
             }
         });
 
-        boutonSuiv = new Button(mesMessages.suivant());
+        boutonSuiv = new Button( mesMessages.suivant() + mesImages.suivant().getHTML());
         boutonSuiv.setEnabled(false);
         boutonSuiv.addClickHandler(new ClickHandler() {
 
@@ -114,6 +109,9 @@ public class Tutoalbumphoto implements EntryPoint, ClickHandler {
         horizontalPanel.add(boutonPrec);
         horizontalPanel.add(mesImages.spacer().createImage());
         horizontalPanel.add(boutonSuiv);
+        horizontalPanel.add(mesImages.spacer().createImage());
+        horizontalPanel.add(new Anchor(mesImages.fr().getHTML(), true, "?locale=fr"));
+        horizontalPanel.add(new Anchor(mesImages.en().getHTML(), true, "?locale=en"));
 
         verticalPanel.add(horizontalPanel);
         verticalPanel.add(liste);
@@ -183,10 +181,9 @@ public class Tutoalbumphoto implements EntryPoint, ClickHandler {
                     FormulaireRecherche fenetreRecherche = (FormulaireRecherche) event
                             .getTarget();
                     if (fenetreRecherche != null) {
-                        // On réccupére l'url et le titre dans les champs de la
-                        // fenêtre
+                        // On réccupére le texte entrée par l'utilisateur
                         String titre = fenetreRecherche.saisieSujet.getText();
-                        // Si l'url a été remplis, on ajoute l'image
+                        // Si le champ n'est pas vide, on cherche l'image
                         if (titre.length() != 0)
                             rechercher(titre);
                     }
@@ -197,26 +194,43 @@ public class Tutoalbumphoto implements EntryPoint, ClickHandler {
     }
 
     public void rechercher(String sujet) {
-
+        // On active les boutons en fonction de la page courante
         if (page == 0) {
             boutonPrec.setEnabled(false);
         } else
             boutonPrec.setEnabled(true);
         boutonSuiv.setEnabled(true);
-
+        // On efface la liste des photos
+        liste.clear();
+        // On enregistre le sujet en cours
         sujetEnCours = sujet;
-
+        // On appelle le service en ligne qui va aller chercher les photos sur le site en ligne Picasa 
         picasaService.getPhotos(sujet, page,
             new AsyncCallback<List<Photographie>>() {
-    
+                /**
+                 * Fonction appelé si l'appel au service distant à échouer ou que le service à retourner une exception
+                 *  
+                 * @see com.google.gwt.user.client.rpc.AsyncCallback#onFailure(java.lang.Throwable)
+                 */
                 @Override
                 public void onFailure(Throwable caught) {
                     Window.alert("Erreur lors de l'appel de la fonction distante getPhotos : " + caught.getMessage());
                 }
     
+                /**
+                 * Fonction appelé quand l'appel à la fonction distante à retourner son résultat.
+                 * 
+                 * @param result Le retour de la fonction distante
+                 */
                 @Override
                 public void onSuccess(List<Photographie> result) {
-                    liste.clear();
+                    // Si il n'y a pas de résultat, on affiche un message
+                    if (result.isEmpty()) {
+                        boutonPrec.setEnabled(false);
+                        boutonPrec.setEnabled(false);
+                        Window.alert("Il n'y a pas de résultat");
+                    }
+                    // On ajoute toute les photos
                     for (Photographie p : result) {
                         liste.add(new Miniature(p.getPhotoMiniatureUrl(), p
                                 .getPhotoTitre(), p.getPicasaUrl()));
