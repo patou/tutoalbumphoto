@@ -32,7 +32,7 @@ public class FormulaireAjout extends DialogBox {
         super();
         // Indique le titre de la fenêtre
         setText(mesMessages.texteAjout());
-        // Layout pour afficher les élèments dans un tableau
+        // Layout pour afficher les éléments dans un tableau
         Grid grid = new Grid(3, 2);
         grid.setWidget(0, 0, new Label(mesMessages.url()));
         grid.setWidget(0, 1, saisieUrl);

@@ -30,7 +30,7 @@ public class FormulaireRecherche extends DialogBox {
         super();
         // Indique le titre de la fenêtre
         setText(mesMessages.texteRecherche());
-        // Layout pour afficher les élèments dans un tableau
+        // Layout pour afficher les éléments dans un tableau
         Grid grid = new Grid(3, 2);
         grid.setWidget(0, 0, new Label(mesMessages.sujet()));
         grid.setWidget(0, 1, saisieSujet);
