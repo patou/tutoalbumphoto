@@ -6,9 +6,21 @@ public class Photographie implements Serializable {
 
     private static final long serialVersionUID = -3006587958250286140L;
 
+    /**
+     * L'url de la photo sur Picasa
+     */
     public String picasaUrl;
+    /**
+     * L'url de la photo
+     */
     public String photoUrl;
+    /**
+     * L'url de la photo miniature
+     */
     public String photoMiniatureUrl;
+    /**
+     * Titre de la photo
+     */
     public String photoTitre;
 
     public Photographie() {
