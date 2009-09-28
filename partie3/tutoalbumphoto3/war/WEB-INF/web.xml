@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE web-app
+    PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+    "http://java.sun.com/dtd/web-app_2_3.dtd">
+
+<web-app>
+    <servlet>
+        <servlet-name>picasaService</servlet-name>
+        <servlet-class>sfeir.gwt.albumphoto.server.rpc.impl.PicasaServiceImpl</servlet-class>
+    </servlet>
+
+	<servlet>
+        <servlet-name>imageService</servlet-name>
+        <servlet-class>sfeir.gwt.albumphoto.server.rpc.impl.ImageServiceImpl</servlet-class>
+    </servlet>
+
+    
+	<servlet>
+        <servlet-name>imageServlet</servlet-name>
+        <servlet-class>sfeir.gwt.albumphoto.server.servlet.ImageServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>picasaService</servlet-name>
+        <url-pattern>/tutoalbumphoto/picasaService</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>imageService</servlet-name>
+        <url-pattern>/tutoalbumphoto/imageService</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>imageServlet</servlet-name>
+        <url-pattern>/image/</url-pattern>
+    </servlet-mapping>
+        
+  <!-- Default page to serve -->
+  <welcome-file-list>
+    <welcome-file>Tutoalbumphoto.html</welcome-file>
+  </welcome-file-list>
+</web-app>

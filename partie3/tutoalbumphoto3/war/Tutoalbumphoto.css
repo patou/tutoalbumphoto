@@ -1,0 +1,14 @@
+/** Ajoutez le CSS pour votre application. */
+
+/** La plupart des composants GWT possèdent ont une classe CSS prédéfinie */
+.gwt-DialogBox {
+  width: 400px;
+}
+
+
+.miniature-float {
+    float : left;
+    margin: 20px;
+    height: 150px;
+    width: 150px;
+}
