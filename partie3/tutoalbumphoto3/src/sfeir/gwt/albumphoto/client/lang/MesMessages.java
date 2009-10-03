@@ -29,4 +29,8 @@ public interface MesMessages extends Constants {
 
     String annuler();
 
+    String mesPhotos();
+
+    String noImages();
+
 }

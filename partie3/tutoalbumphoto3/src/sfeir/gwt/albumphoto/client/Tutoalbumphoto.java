@@ -49,6 +49,7 @@ public class Tutoalbumphoto implements EntryPoint, ClickHandler, AsyncCallback<L
     private FlowPanel liste;
     private Button boutonAjouter;
     private Button boutonRechercher;
+    private Button boutonMesphotos;
     private Button boutonPrec;
     private Button boutonSuiv;
 
@@ -78,6 +79,11 @@ public class Tutoalbumphoto implements EntryPoint, ClickHandler, AsyncCallback<L
         boutonRechercher = new Button(mesMessages.rechercher());
         // On ajoute un évènement sur le clic du bouton
         boutonRechercher.addClickHandler(this);
+        
+     // Création du bouton pour rechercher des images
+        boutonMesphotos = new Button(mesMessages.mesPhotos());
+        // On ajoute un évènement sur le clic du bouton
+        boutonMesphotos.addClickHandler(this);
 
         boutonPrec = new Button(mesImages.precedent().getHTML() + mesMessages.precedent());
         boutonPrec.setEnabled(false);
@@ -114,6 +120,8 @@ public class Tutoalbumphoto implements EntryPoint, ClickHandler, AsyncCallback<L
         horizontalPanel.add(boutonAjouter);
         horizontalPanel.add(mesImages.spacer().createImage());
         horizontalPanel.add(boutonRechercher);
+        horizontalPanel.add(mesImages.spacer().createImage());
+        horizontalPanel.add(boutonMesphotos);
         horizontalPanel.add(mesImages.spacer().createImage());
         horizontalPanel.add(boutonPrec);
         horizontalPanel.add(mesImages.spacer().createImage());
@@ -164,8 +172,13 @@ public class Tutoalbumphoto implements EntryPoint, ClickHandler, AsyncCallback<L
 
             });
         }
-
-        if (event.getSource() == boutonRechercher) {
+        // On repasse à nos photos 
+        else if (event.getSource() == boutonMesphotos) {
+            page = 1;
+            rechercher(null);
+        }
+        // On recherche des photos sur picasa
+        else if (event.getSource() == boutonRechercher) {
             
             // On crée la fenêtre
             FormulaireRecherche fenetreRecherche = new FormulaireRecherche();
@@ -189,7 +202,10 @@ public class Tutoalbumphoto implements EntryPoint, ClickHandler, AsyncCallback<L
                     FormulaireRecherche fenetreRecherche = (FormulaireRecherche) event
                             .getTarget();
                     if (fenetreRecherche != null) {
-                        rechercher(titre);
+                        if (titre != null && !titre.isEmpty()) {
+                            rechercher(titre);
+                        }
+                        
                     }
                 }
 
@@ -241,7 +257,7 @@ public class Tutoalbumphoto implements EntryPoint, ClickHandler, AsyncCallback<L
         if (result.isEmpty()) {
             boutonPrec.setEnabled(false);
             boutonPrec.setEnabled(false);
-            liste.add(new Label("Il n'y a pas d'image"));
+            liste.add(new Label(mesMessages.noImages()));
         }
         // On ajoute toute les photos
         for (Photographie p : result) {
