@@ -50,14 +50,11 @@ public class PicasaServiceImpl extends RemoteServiceServlet implements
 
             NodeList childNodes = entrees.item(i)
                     .getChildNodes();
-            String picasaUrlphotoUrl = childNodes.item(9).getAttributes().getNamedItem(
-                            "href").getNodeValue();
-            String photoUrl = childNodes.item(6).getAttributes().getNamedItem(
-            "src").getNodeValue();
+            String picasaUrlphotoUrl = childNodes.item(9).getAttributes().getNamedItem("href").getNodeValue();
+            String photoUrl = childNodes.item(6).getAttributes().getNamedItem("src").getNodeValue();
             int indexOf = photoUrl.lastIndexOf("/");
-            String photoMiniatureUrl = picasaUrlphotoUrl.substring(0, indexOf) + "/s144"
-            + photoUrl.substring(indexOf);
-            Photographie pt = new Photographie(photoMiniatureUrl, photoUrl, childNodes.item(4).getFirstChild().getNodeValue());
+            String photoMiniatureUrl = photoUrl.substring(0, indexOf) + "/s144" + photoUrl.substring(indexOf);
+            Photographie pt = new Photographie(photoMiniatureUrl, picasaUrlphotoUrl, childNodes.item(4).getFirstChild().getNodeValue());
             photos.add(pt);
         }
         return photos;
