@@ -182,8 +182,6 @@ public class Tutoalbumphoto implements EntryPoint, ClickHandler, AsyncCallback<L
             
             // On crée la fenêtre
             FormulaireRecherche fenetreRecherche = new FormulaireRecherche();
-            // On réccupére le texte entrée par l'utilisateur
-            final String titre = fenetreRecherche.saisieSujet.getText();
             // On l'affiche
             fenetreRecherche.show();
             // On ajoute un évènement sur la fermeture de la fenêtre
@@ -202,6 +200,8 @@ public class Tutoalbumphoto implements EntryPoint, ClickHandler, AsyncCallback<L
                     FormulaireRecherche fenetreRecherche = (FormulaireRecherche) event
                             .getTarget();
                     if (fenetreRecherche != null) {
+                        // On réccupére le texte entrée par l'utilisateur
+                        String titre = fenetreRecherche.saisieSujet.getText();
                         if (titre != null && !titre.isEmpty()) {
                             rechercher(titre);
                         }
