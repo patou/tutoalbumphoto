@@ -253,6 +253,7 @@ public class Tutoalbumphoto implements EntryPoint, ClickHandler, AsyncCallback<L
      */
     @Override
     public void onSuccess(List<Photographie> result) {
+        liste.clear();
         // Si il n'y a pas de résultat, on affiche un message
         if (result.isEmpty()) {
             boutonPrec.setEnabled(false);
