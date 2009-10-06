@@ -27,7 +27,7 @@ public class FormulaireRecherche extends DialogBox {
      */
     public FormulaireRecherche() {
         // Appelle le constructeur de la classe DialogBox
-        super();
+        super(true);
         // Indique le titre de la fenêtre
         setText(mesMessages.texteRecherche());
         // Layout pour afficher les éléments dans un tableau
