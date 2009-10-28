@@ -1,0 +1,20 @@
+<!DOCTYPE ui:UiBinder
+    SYSTEM "http://google-web-toolkit.googlecode.com/files/xhtml.ent">
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+	xmlns:gwt='urn:import:com.google.gwt.user.client.ui'>
+	<ui:style>
+		.miniature {
+			float : left;
+			margin: 20px;
+			height: 150px;
+			width: 150px;
+		}
+		.label {
+			color: blue;
+		}
+  </ui:style>
+	<div class="{style.miniature}">
+		<img ui:field="miniature" />
+		<span ui:field="label" class="{style.label}" />
+	</div>
+</ui:UiBinder>
