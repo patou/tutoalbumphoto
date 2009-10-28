@@ -1,0 +1,22 @@
+<!DOCTYPE ui:UiBinder
+    SYSTEM "http://google-web-toolkit.googlecode.com/files/xhtml.ent">
+<ui:UiBinder
+  xmlns:ui='urn:ui:com.google.gwt.uibinder'
+  xmlns:gwt='urn:import:com.google.gwt.user.client.ui'>
+<gwt:DockPanel ui:field="root" width="100%">
+  <gwt:Dock direction='NORTH'>
+    <gwt:HorizontalPanel>
+    	<gwt:Button ui:field="boutonAjouter" text="Ajouter"/>
+    	<gwt:Button ui:field="boutonRechercher" text="Rechercher"/>
+    	<gwt:Button ui:field="boutonMesphotos" text="Mes photos"/>
+    	<gwt:Button ui:field="boutonPrec" text="Précédent" enabled="false"/>
+    	<gwt:Button ui:field="boutonSuiv" text="Suivant"/>
+    	<gwt:Anchor href="?locale=fr">fr</gwt:Anchor>
+    	<gwt:Anchor href="?locale=en">en</gwt:Anchor>
+    </gwt:HorizontalPanel>
+  </gwt:Dock>
+  <gwt:Dock direction='CENTER'>
+    <gwt:FlowPanel ui:field="liste"></gwt:FlowPanel>
+  </gwt:Dock>
+</gwt:DockPanel>
+</ui:UiBinder>
