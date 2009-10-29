@@ -13,8 +13,8 @@
 			color: blue;
 		}
   </ui:style>
-	<div class="{style.miniature}">
-		<img ui:field="miniature" />
-		<span ui:field="label" class="{style.label}" />
-	</div>
+	<gwt:VerticalPanel styleName="{style.miniature}">
+		<gwt:Image ui:field="miniature" />
+		<gwt:Label ui:field="label" styleName="{style.label}" />
+	</gwt:VerticalPanel>
 </ui:UiBinder>
