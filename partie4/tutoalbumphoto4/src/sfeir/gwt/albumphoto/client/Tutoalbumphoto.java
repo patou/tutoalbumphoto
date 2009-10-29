@@ -3,9 +3,9 @@ package sfeir.gwt.albumphoto.client;
 import java.util.List;
 
 import sfeir.gwt.albumphoto.client.FormulaireRecherche.Binder;
-import sfeir.gwt.albumphoto.client.images.MesImages;
 import sfeir.gwt.albumphoto.client.lang.MesMessages;
 import sfeir.gwt.albumphoto.client.model.Photographie;
+import sfeir.gwt.albumphoto.client.ressources.MesImages;
 import sfeir.gwt.albumphoto.client.rpc.ImageService;
 import sfeir.gwt.albumphoto.client.rpc.ImageServiceAsync;
 import sfeir.gwt.albumphoto.client.rpc.PicasaService;
@@ -25,6 +25,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
@@ -32,6 +33,7 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.DockPanel.DockLayoutConstant;
 
 /**
  * La classe principale de notre application implémente EntryPoint pour préciser qu'elle est le point d'entrée de l'application, le main() d'une application classique
@@ -42,36 +44,54 @@ public class Tutoalbumphoto implements EntryPoint, ClickHandler, AsyncCallback<L
     private MesMessages mesMessages = GWT.create(MesMessages.class);
     private MesImages mesImages = GWT.create(MesImages.class);
 
-    private final PicasaServiceAsync picasaService = GWT.create(PicasaService.class);
-    private final ImageServiceAsync service = GWT.create(ImageService.class);
+    private final PicasaServiceAsync picasaService = GWT
+            .create(PicasaService.class);
+    private final ImageServiceAsync service = GWT
+    .create(ImageService.class);
 
     private Integer page = 0;
     private String sujetEnCours;
-    
-    interface Binder extends UiBinder<Widget, Tutoalbumphoto> {}
-    private static final Binder binder = GWT.create(Binder.class);
 
-
-    @UiField
-    FlowPanel liste;
-    @UiField
-    Button boutonAjouter;
-    @UiField
-    Button boutonRechercher;
-    @UiField
-    Button boutonMesphotos;
-    @UiField
-    Button boutonPrec;
-    @UiField
-    Button boutonSuiv;
+    private FlowPanel liste;
+    private Button boutonAjouter;
+    private Button boutonRechercher;
+    private Button boutonMesphotos;
+    private Button boutonPrec;
+    private Button boutonSuiv;
 
     /**
-     * C'est la première methode qui sera appelée à l'instanciation de la classe, toutes classes implémentant EntryPoint doit définir cette méthode. C'est ici qu'on initialise généralement les variables et qu'on construit l'interface graphique. On
-     * peut le comparer au Main d'une application java ou d'un programme C
+     * C'est la première methode qui sera appelée à l'instanciation de la
+     * classe, toutes classes implémentant EntryPoint doit définir cette méthode.
+     * C'est ici qu'on initialise généralement les variables et qu'on construit
+     * l'interface graphique. On peut le comparer au Main d'une application java
+     * ou d'un programme C
      */
     public void onModuleLoad() {
+        /*
+         * Liste de toutes les miniatures Le FlowPanel affiche ses composants à
+         * la suite les uns des autres Il n'ajoute aucun code html entre les
+         * deux. Nous avons mis notre composant Miniature en flot: left; Ce qui
+         * nous permet de les afficher en plusieurs lignes.
+         */
 
-        RootPanel.get().add(binder.createAndBindUi(this));
+        liste = new FlowPanel();
+
+        // Création du bouton pour ajouter une image
+        boutonAjouter = new Button(mesMessages.ajouter());
+        // On ajoute un évènement sur le clic du bouton
+        boutonAjouter.addClickHandler(this);
+
+        // Création du bouton pour rechercher des images
+        boutonRechercher = new Button(mesMessages.rechercher());
+        // On ajoute un évènement sur le clic du bouton
+        boutonRechercher.addClickHandler(this);
+        
+     // Création du bouton pour rechercher des images
+        boutonMesphotos = new Button(mesMessages.mesPhotos());
+        // On ajoute un évènement sur le clic du bouton
+        boutonMesphotos.addClickHandler(this);
+
+        boutonPrec = new Button(mesImages.precedent().getHTML() + mesMessages.precedent());
         boutonPrec.setEnabled(false);
         boutonPrec.addClickHandler(new ClickHandler() {
 
@@ -83,6 +103,8 @@ public class Tutoalbumphoto implements EntryPoint, ClickHandler, AsyncCallback<L
                 }
             }
         });
+
+        boutonSuiv = new Button( mesMessages.suivant() + mesImages.suivant().getHTML());
         boutonSuiv.setEnabled(false);
         boutonSuiv.addClickHandler(new ClickHandler() {
 
@@ -95,11 +117,41 @@ public class Tutoalbumphoto implements EntryPoint, ClickHandler, AsyncCallback<L
             }
         });
 
+        // Layout qui contient notre liste et les boutons à ajouter
+        
+        HorizontalPanel horizontalPanel = creeBarreDeBoutons();
+
+        DockPanel dockPanel = new DockPanel();
+        
+        dockPanel.add(horizontalPanel, DockPanel.NORTH);
+        dockPanel.add(liste, DockPanel.CENTER);
         // On ajoute dans notre page notre layout
+        RootPanel.get().add(dockPanel);
         rechercher(null);
     }
 
-    @UiHandler({"boutonAjouter","boutonMesphotos","boutonRechercher"})
+
+    private HorizontalPanel creeBarreDeBoutons() {
+        HorizontalPanel horizontalPanel = new HorizontalPanel();
+
+        horizontalPanel.add(mesImages.logo().createImage());
+        horizontalPanel.add(mesImages.spacer().createImage());
+        horizontalPanel.add(boutonAjouter);
+        horizontalPanel.add(mesImages.spacer().createImage());
+        horizontalPanel.add(boutonRechercher);
+        horizontalPanel.add(mesImages.spacer().createImage());
+        horizontalPanel.add(boutonMesphotos);
+        horizontalPanel.add(mesImages.spacer().createImage());
+        horizontalPanel.add(boutonPrec);
+        horizontalPanel.add(mesImages.spacer().createImage());
+        horizontalPanel.add(boutonSuiv);
+        horizontalPanel.add(mesImages.spacer().createImage());
+        horizontalPanel.add(new Anchor(mesImages.fr().getHTML(), true, "?locale=fr"));
+        horizontalPanel.add(new Anchor(mesImages.en().getHTML(), true, "?locale=en"));
+        return horizontalPanel;
+    }
+
+
     public void onClick(ClickEvent event) {
         if (event.getSource() == boutonAjouter) {
             GWT.runAsync(new RunAsyncCallback() {

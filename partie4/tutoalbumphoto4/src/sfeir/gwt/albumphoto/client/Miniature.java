@@ -10,7 +10,10 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
@@ -18,17 +21,18 @@ import com.google.gwt.user.client.ui.Widget;
  * 
  */
 
-public class Miniature extends Widget {
-    interface Binder extends UiBinder<Element, Miniature> {
+public class Miniature extends Composite {
+    interface Binder extends UiBinder<Widget, Miniature> {
     }
 
     private static final Binder binder = GWT.create(Binder.class);
 
+    @UiField
+    Image miniature;
+    @UiField
+    Label label;
 
-    @UiField
-    ImageElement miniature;
-    @UiField
-    SpanElement label;
+    private String destination;
 
     /**
      * Affiche une photo miniature avec le titre centré en dessous
@@ -38,15 +42,15 @@ public class Miniature extends Widget {
      * @param titre
      *            Titre de la photo
      */
-    public Miniature(String url, String titre, final String destination) {
-        setElement(binder.createAndBindUi(this));
-        miniature.setSrc(url);
-//        Image.wrap(miniature).addClickHandler(new ClickHandler() {
-//            @Override
-//            public void onClick(ClickEvent event) {
-//                Window.open(destination, "Image", "menubar=no, status=no, scrollbars=no, menubar=no, width=200, height=100");
-//            }
-//        });
-        label.setInnerHTML(titre);
+    public Miniature(String url, String titre, String destination) {
+        this.destination = destination;
+        initWidget(binder.createAndBindUi(this));
+        miniature.setUrl(url);
+        label.setText(titre);
+    }
+
+    @UiHandler("miniature")
+    public void onClick(ClickEvent event) {
+        Window.open(destination, "Image", "menubar=no, status=no, scrollbars=no, menubar=no, width=200, height=100");
     }
 }
