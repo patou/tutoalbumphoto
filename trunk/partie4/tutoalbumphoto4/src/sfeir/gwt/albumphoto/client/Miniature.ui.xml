@@ -13,8 +13,10 @@
 			color: blue;
 		}
   </ui:style>
-	<gwt:VerticalPanel styleName="{style.miniature}">
+  <gwt:DecoratorPanel styleName="{style.miniature}">
+	<gwt:VerticalPanel>
 		<gwt:Image ui:field="miniature" />
 		<gwt:Label ui:field="label" styleName="{style.label}" />
 	</gwt:VerticalPanel>
+  </gwt:DecoratorPanel>
 </ui:UiBinder>
