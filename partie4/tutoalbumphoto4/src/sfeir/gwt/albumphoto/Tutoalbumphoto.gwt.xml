@@ -21,6 +21,7 @@
     <!-- Fonctionnalités GWT 2.0  -->
     <inherits name="com.google.gwt.resources.Resources" />
     <inherits name="com.google.gwt.uibinder.UiBinder" />
+    <inherits name='com.google.gwt.rpc.RPC' />
     
     <extend-property name="locale" values="fr" />
     <extend-property name="locale" values="en" />

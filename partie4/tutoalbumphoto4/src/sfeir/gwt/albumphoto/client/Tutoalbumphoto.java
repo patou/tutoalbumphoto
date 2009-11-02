@@ -14,6 +14,7 @@ import sfeir.gwt.albumphoto.client.rpc.PicasaServiceAsync;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.RunAsyncCallback;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.CloseEvent;
@@ -23,13 +24,17 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.AbstractImagePrototype;
 import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.DockLayoutPanel;
 import com.google.gwt.user.client.ui.DockPanel;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
+import com.google.gwt.user.client.ui.RootLayoutPanel;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
@@ -91,7 +96,8 @@ public class Tutoalbumphoto implements EntryPoint, ClickHandler, AsyncCallback<L
         // On ajoute un évènement sur le clic du bouton
         boutonMesphotos.addClickHandler(this);
 
-        boutonPrec = new Button(mesImages.precedent().getHTML() + mesMessages.precedent());
+        
+        boutonPrec = new Button(new Image(mesImages.precedent()).toString() + mesMessages.precedent());
         boutonPrec.setEnabled(false);
         boutonPrec.addClickHandler(new ClickHandler() {
 
@@ -104,7 +110,7 @@ public class Tutoalbumphoto implements EntryPoint, ClickHandler, AsyncCallback<L
             }
         });
 
-        boutonSuiv = new Button( mesMessages.suivant() + mesImages.suivant().getHTML());
+        boutonSuiv = new Button( mesMessages.suivant() + new Image(mesImages.suivant()).toString());
         boutonSuiv.setEnabled(false);
         boutonSuiv.addClickHandler(new ClickHandler() {
 
@@ -121,12 +127,19 @@ public class Tutoalbumphoto implements EntryPoint, ClickHandler, AsyncCallback<L
         
         HorizontalPanel horizontalPanel = creeBarreDeBoutons();
 
-        DockPanel dockPanel = new DockPanel();
+        DockLayoutPanel dockPanel = new DockLayoutPanel(Unit.PX);
         
-        dockPanel.add(horizontalPanel, DockPanel.NORTH);
-        dockPanel.add(liste, DockPanel.CENTER);
+        dockPanel.addNorth(horizontalPanel, 50.0);
+        boutonPrec.setHeight("25px");
+        boutonSuiv.setHeight("25px");
+        dockPanel.addWest(boutonPrec, 100);
+        dockPanel.addEast(boutonSuiv, 100);
+        dockPanel.add(liste);
+        dockPanel.layout();
         // On ajoute dans notre page notre layout
-        RootPanel.get().add(dockPanel);
+        RootLayoutPanel rootLayoutPanel = RootLayoutPanel.get();
+        rootLayoutPanel.add(dockPanel);
+        rootLayoutPanel.layout();
         rechercher(null);
     }
 
@@ -134,20 +147,15 @@ public class Tutoalbumphoto implements EntryPoint, ClickHandler, AsyncCallback<L
     private HorizontalPanel creeBarreDeBoutons() {
         HorizontalPanel horizontalPanel = new HorizontalPanel();
 
-        horizontalPanel.add(mesImages.logo().createImage());
-        horizontalPanel.add(mesImages.spacer().createImage());
+        horizontalPanel.add(new Image(mesImages.logo()));
+        horizontalPanel.add(new Image(mesImages.spacer()));
         horizontalPanel.add(boutonAjouter);
-        horizontalPanel.add(mesImages.spacer().createImage());
+        horizontalPanel.add(new Image(mesImages.spacer()));
         horizontalPanel.add(boutonRechercher);
-        horizontalPanel.add(mesImages.spacer().createImage());
+        horizontalPanel.add(new Image(mesImages.spacer()));
         horizontalPanel.add(boutonMesphotos);
-        horizontalPanel.add(mesImages.spacer().createImage());
-        horizontalPanel.add(boutonPrec);
-        horizontalPanel.add(mesImages.spacer().createImage());
-        horizontalPanel.add(boutonSuiv);
-        horizontalPanel.add(mesImages.spacer().createImage());
-        horizontalPanel.add(new Anchor(mesImages.fr().getHTML(), true, "?locale=fr"));
-        horizontalPanel.add(new Anchor(mesImages.en().getHTML(), true, "?locale=en"));
+        horizontalPanel.add(new Anchor(new Image(mesImages.fr()).toString(), true, "?locale=fr"));
+        horizontalPanel.add(new Anchor(new Image(mesImages.en()).toString(), true, "?locale=en"));
         return horizontalPanel;
     }
 
