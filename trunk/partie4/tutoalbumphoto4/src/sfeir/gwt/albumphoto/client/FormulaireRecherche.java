@@ -4,14 +4,11 @@ import sfeir.gwt.albumphoto.client.lang.MesMessages;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.DialogBox;
-import com.google.gwt.user.client.ui.Grid;
-import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -22,9 +19,8 @@ public class FormulaireRecherche extends DialogBox {
 
     private MesMessages mesMessages = GWT.create(MesMessages.class);
 
-    interface Binder extends UiBinder<Widget, FormulaireRecherche> {
-    }
-
+    //Interface qui sera implémenté par GWT qui contiendra la création de l'interface UiBinder venant du fichier XML
+    interface Binder extends UiBinder<Widget, FormulaireRecherche> {}
     private static final Binder binder = GWT.create(Binder.class);
 
     @UiField
@@ -42,15 +38,15 @@ public class FormulaireRecherche extends DialogBox {
         // Indique le titre de la fenêtre
         setText(mesMessages.texteRecherche());
 
+        //On crée l'interface venant du fichier XML
         add(binder.createAndBindUi(this));
         
-        // On ajoute notre layout à la fenêtre
         // On centre la fenêtre dans la page
         center();
     }
 
     /*
-     * On ajoute l'évènement sur le clique du bouton Pour cacher la fenêtre On crée directement le Handler grace à une fonction anonyme
+     * On ajoute l'évènement sur le clic du bouton Pour cacher la fenêtre
      */
     
     @UiHandler("boutonAjouter")

@@ -3,6 +3,7 @@
 	<version>partie4</version>
 	<static-files>
 		<exclude path="**/*.gwt.rpc" />
+		<exclude path="tutoalbumphoto/compile-report/*"/>
 	</static-files>
 
 	<resource-files>
